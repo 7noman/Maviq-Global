@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Phone, Mail, Globe, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
-import { companyDetails, coreServices } from '../data/companyData';
+import { Phone, Mail, Globe, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { companyDetails } from '../data/companyData';
 import RevealOnScroll from '../components/RevealOnScroll';
+import CountryFlag from '../components/CountryFlag';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
-    fullName: '',
-    businessEmail: '',
+    name: '',
+    email: '',
+    number: '',
     companyName: '',
-    serviceInterest: '',
-    message: '',
+    notes: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -17,22 +18,19 @@ export default function Contact() {
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = 'Please enter your full name.';
+    if (!formData.name.trim()) {
+      newErrors.name = 'Please enter your name.';
     }
-    if (!formData.businessEmail.trim()) {
-      newErrors.businessEmail = 'Please enter your business email.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.businessEmail)) {
-      newErrors.businessEmail = 'Please provide a valid email format.';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Please enter your email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please provide a valid email format.';
+    }
+    if (!formData.number.trim()) {
+      newErrors.number = 'Please enter your phone number.';
     }
     if (!formData.companyName.trim()) {
-      newErrors.companyName = 'Please enter your organization name.';
-    }
-    if (!formData.serviceInterest) {
-      newErrors.serviceInterest = 'Please select a service of interest.';
-    }
-    if (!formData.message.trim()) {
-      newErrors.message = 'Please provide a brief description of your requirements.';
+      newErrors.companyName = 'Please enter your company name.';
     }
     return newErrors;
   };
@@ -53,15 +51,13 @@ export default function Contact() {
       return;
     }
 
-    // Honest handling per R-26 / C-2 / Prompt:
-    // This creates an encoded mailto link so the inquiry immediately opens the user's email client
-    const subject = encodeURIComponent(`Consulting Inquiry: ${formData.companyName} - ${formData.serviceInterest}`);
+    const subject = encodeURIComponent(`Consulting Inquiry: ${formData.companyName}`);
     const body = encodeURIComponent(
-      `Name: ${formData.fullName}\n` +
-      `Company: ${formData.companyName}\n` +
-      `Email: ${formData.businessEmail}\n` +
-      `Service: ${formData.serviceInterest}\n\n` +
-      `Requirements / Message:\n${formData.message}\n`
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n` +
+      `Phone Number: ${formData.number}\n` +
+      `Company Name: ${formData.companyName}\n\n` +
+      `Notes:\n${formData.notes.trim() || 'No additional notes provided.'}\n`
     );
 
     const mailtoUrl = `mailto:${companyDetails.email}?subject=${subject}&body=${body}`;
@@ -84,34 +80,46 @@ export default function Contact() {
         </div>
 
         <div className="contact-layout-grid">
-          {/* Left Column: Direct Communication Channels & Support Image */}
+          {/* Left Column: Regional Presence, Flags, Addresses & Direct Lines */}
           <div className="contact-info-col">
             <RevealOnScroll>
-              <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>
-                Official Regional Contacts
+              <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem' }}>
+                Regional Presence & Official Contacts
               </h3>
               <p style={{ fontSize: '0.9375rem', color: 'var(--color-supporting-text)' }}>
                 Reach our regional consulting desks directly by telephone or dispatch an inquiry to our central corporate email.
               </p>
 
-              <div className="contact-channels-list">
+              {/* Country Addresses & Flags */}
+              <div className="contact-regions-list">
                 {companyDetails.regions.map((reg) => (
-                  <a
-                    key={reg.code}
-                    href={`tel:${reg.phoneRaw}`}
-                    className="contact-channel-item"
-                    aria-label={`Call ${reg.country} office at ${reg.phone}`}
-                  >
-                    <div className="contact-channel-icon-box">
-                      <Phone size={20} aria-hidden="true" />
+                  <div key={reg.code} className="contact-region-card">
+                    <div className="contact-region-header">
+                      <CountryFlag code={reg.code} size="md" />
+                      <h4 className="contact-region-country">{reg.country}</h4>
                     </div>
-                    <div>
-                      <span className="contact-channel-label">{reg.country} Direct Line</span>
-                      <span className="contact-channel-value">{reg.phone}</span>
+                    <div className="contact-region-meta">
+                      <div className="contact-region-row">
+                        <MapPin size={15} color="#1557A6" style={{ flexShrink: 0 }} aria-hidden="true" />
+                        <span>{reg.address}</span>
+                      </div>
+                      <div className="contact-region-row">
+                        <Phone size={15} color="#1557A6" style={{ flexShrink: 0 }} aria-hidden="true" />
+                        <a
+                          href={`tel:${reg.phoneRaw}`}
+                          className="contact-region-phone"
+                          aria-label={`Call ${reg.country} office at ${reg.phone}`}
+                        >
+                          {reg.phone}
+                        </a>
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 ))}
+              </div>
 
+              {/* Central Email & Web Portal */}
+              <div className="contact-channels-list">
                 <a
                   href={`mailto:${companyDetails.email}`}
                   className="contact-channel-item"
@@ -142,28 +150,18 @@ export default function Contact() {
                   </div>
                 </a>
               </div>
-
-              <div className="contact-postal-badge">
-                <MapPin size={20} color="#1557A6" style={{ flexShrink: 0 }} aria-hidden="true" />
-                <div>
-                  <strong style={{ display: 'block', fontSize: '0.8125rem', textTransform: 'uppercase', color: 'var(--color-supporting-text)' }}>
-                    Corporate Mailing Address
-                  </strong>
-                  <span>{companyDetails.postalAddress}</span>
-                </div>
-              </div>
             </RevealOnScroll>
           </div>
 
-          {/* Right Column: Accessible Business Inquiry Form */}
+          {/* Right Column: Simplified Business Inquiry Form */}
           <div>
             <RevealOnScroll delay={150}>
               <div className="contact-form-card">
                 <h3 style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>
-                  Submit Requirements
+                  Send Us an Inquiry
                 </h3>
                 <p style={{ fontSize: '0.875rem', color: 'var(--color-supporting-text)', marginBottom: '1.5rem' }}>
-                  Complete this brief form to launch a structured email to our regional consulting team.
+                  Complete the fields below to prepare a direct email inquiry to our consulting team.
                 </p>
 
                 {submitted && (
@@ -173,56 +171,83 @@ export default function Contact() {
                       <span>Ready in your email application</span>
                     </div>
                     <p style={{ margin: 0, fontSize: '0.8125rem' }}>
-                      Your email client has been opened with your prefilled inquiry. You can also write directly to <a href={`mailto:${companyDetails.email}`} style={{ fontWeight: '600' }}>{companyDetails.email}</a>.
+                      Your email client has been opened with your prefilled inquiry. You can also write directly to{' '}
+                      <a href={`mailto:${companyDetails.email}`} style={{ fontWeight: '600' }}>
+                        {companyDetails.email}
+                      </a>.
                     </p>
                   </div>
                 )}
 
                 <form onSubmit={handleSubmit} noValidate>
-                  {/* Full Name */}
+                  {/* Name */}
                   <div className="form-group">
-                    <label htmlFor="fullName" className="form-label">
-                      Full Name <span className="required" aria-hidden="true">*</span>
+                    <label htmlFor="name" className="form-label">
+                      Name <span className="required" aria-hidden="true">*</span>
                     </label>
                     <input
                       type="text"
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
+                      id="name"
+                      name="name"
+                      value={formData.name}
                       onChange={handleChange}
-                      placeholder="e.g. Sarah Al-Mansoor"
-                      className={`form-input ${errors.fullName ? 'has-error' : ''}`}
+                      placeholder="Enter your name"
+                      className={`form-input ${errors.name ? 'has-error' : ''}`}
                       aria-required="true"
-                      aria-invalid={Boolean(errors.fullName)}
-                      aria-describedby={errors.fullName ? 'fullName-error' : undefined}
+                      aria-invalid={Boolean(errors.name)}
+                      aria-describedby={errors.name ? 'name-error' : undefined}
                     />
-                    {errors.fullName && (
-                      <span id="fullName-error" className="form-error-msg">
-                        {errors.fullName}
+                    {errors.name && (
+                      <span id="name-error" className="form-error-msg">
+                        {errors.name}
                       </span>
                     )}
                   </div>
 
-                  {/* Business Email */}
+                  {/* Email */}
                   <div className="form-group">
-                    <label htmlFor="businessEmail" className="form-label">
-                      Business Email <span className="required" aria-hidden="true">*</span>
+                    <label htmlFor="email" className="form-label">
+                      Email <span className="required" aria-hidden="true">*</span>
                     </label>
                     <input
                       type="email"
-                      id="businessEmail"
-                      name="businessEmail"
-                      value={formData.businessEmail}
+                      id="email"
+                      name="email"
+                      value={formData.email}
                       onChange={handleChange}
-                      placeholder="e.g. s.mansoor@enterprise.com"
-                      className={`form-input ${errors.businessEmail ? 'has-error' : ''}`}
+                      placeholder="Enter your email address"
+                      className={`form-input ${errors.email ? 'has-error' : ''}`}
                       aria-required="true"
-                      aria-invalid={Boolean(errors.businessEmail)}
-                      aria-describedby={errors.businessEmail ? 'businessEmail-error' : undefined}
+                      aria-invalid={Boolean(errors.email)}
+                      aria-describedby={errors.email ? 'email-error' : undefined}
                     />
-                    {errors.businessEmail && (
-                      <span id="businessEmail-error" className="form-error-msg">
-                        {errors.businessEmail}
+                    {errors.email && (
+                      <span id="email-error" className="form-error-msg">
+                        {errors.email}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Number */}
+                  <div className="form-group">
+                    <label htmlFor="number" className="form-label">
+                      Number <span className="required" aria-hidden="true">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="number"
+                      name="number"
+                      value={formData.number}
+                      onChange={handleChange}
+                      placeholder="Enter your contact number"
+                      className={`form-input ${errors.number ? 'has-error' : ''}`}
+                      aria-required="true"
+                      aria-invalid={Boolean(errors.number)}
+                      aria-describedby={errors.number ? 'number-error' : undefined}
+                    />
+                    {errors.number && (
+                      <span id="number-error" className="form-error-msg">
+                        {errors.number}
                       </span>
                     )}
                   </div>
@@ -230,7 +255,7 @@ export default function Contact() {
                   {/* Company Name */}
                   <div className="form-group">
                     <label htmlFor="companyName" className="form-label">
-                      Company / Organization Name <span className="required" aria-hidden="true">*</span>
+                      Company Name <span className="required" aria-hidden="true">*</span>
                     </label>
                     <input
                       type="text"
@@ -238,7 +263,7 @@ export default function Contact() {
                       name="companyName"
                       value={formData.companyName}
                       onChange={handleChange}
-                      placeholder="e.g. Gulf Financial Holdings"
+                      placeholder="Enter your company name"
                       className={`form-input ${errors.companyName ? 'has-error' : ''}`}
                       aria-required="true"
                       aria-invalid={Boolean(errors.companyName)}
@@ -251,68 +276,28 @@ export default function Contact() {
                     )}
                   </div>
 
-                  {/* Service of Interest */}
+                  {/* Notes (optional) */}
                   <div className="form-group">
-                    <label htmlFor="serviceInterest" className="form-label">
-                      Service Area of Interest <span className="required" aria-hidden="true">*</span>
-                    </label>
-                    <select
-                      id="serviceInterest"
-                      name="serviceInterest"
-                      value={formData.serviceInterest}
-                      onChange={handleChange}
-                      className={`form-select ${errors.serviceInterest ? 'has-error' : ''}`}
-                      aria-required="true"
-                      aria-invalid={Boolean(errors.serviceInterest)}
-                      aria-describedby={errors.serviceInterest ? 'serviceInterest-error' : undefined}
-                    >
-                      <option value="">Select a service category</option>
-                      {coreServices.map((svc) => (
-                        <option key={svc.id} value={svc.title}>
-                          {svc.title}
-                        </option>
-                      ))}
-                      <option value="Executive Search">Executive Search</option>
-                      <option value="Workforce & Payroll Solutions">Workforce & Payroll Solutions</option>
-                      <option value="General Corporate Advisory">General Corporate Advisory</option>
-                    </select>
-                    {errors.serviceInterest && (
-                      <span id="serviceInterest-error" className="form-error-msg">
-                        {errors.serviceInterest}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Message / Scope */}
-                  <div className="form-group">
-                    <label htmlFor="message" className="form-label">
-                      Requirements & Project Scope <span className="required" aria-hidden="true">*</span>
+                    <label htmlFor="notes" className="form-label">
+                      Notes <span className="optional-label">(optional)</span>
                     </label>
                     <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
+                      id="notes"
+                      name="notes"
+                      value={formData.notes}
                       onChange={handleChange}
-                      placeholder="Please describe your technology requirements, talent profiles, or engagement timeline..."
-                      className={`form-textarea ${errors.message ? 'has-error' : ''}`}
-                      aria-required="true"
-                      aria-invalid={Boolean(errors.message)}
-                      aria-describedby={errors.message ? 'message-error' : undefined}
+                      placeholder="Share any additional details or requirements..."
+                      className="form-textarea"
                     />
-                    {errors.message && (
-                      <span id="message-error" className="form-error-msg">
-                        {errors.message}
-                      </span>
-                    )}
                   </div>
 
                   <button type="submit" className="btn btn-primary btn-block btn-lg">
-                    <span>Dispatch Requirements via Email</span>
+                    <span>SUBMIT</span>
                     <Send size={18} aria-hidden="true" />
                   </button>
 
                   <p className="form-disclaimer">
-                    Note: Submitting this form prepares a formatted email dispatch directly to {companyDetails.email} using your preferred email software. No third-party data broker is involved.
+                    Submitting opens your default email client addressed to {companyDetails.email} with your inquiry details prefilled.
                   </p>
                 </form>
               </div>
@@ -323,4 +308,3 @@ export default function Contact() {
     </section>
   );
 }
-

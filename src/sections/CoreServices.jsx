@@ -8,7 +8,6 @@ import {
   Briefcase,
   BadgeDollarSign,
   Globe,
-  ArrowRight,
   Check
 } from 'lucide-react';
 import { coreServices } from '../data/companyData';
@@ -28,10 +27,10 @@ const iconMap = {
 
 export default function CoreServices() {
   return (
-    <section id="services" className="section section-bg-cool" aria-label="Core Services">
+    <section id="services" className="section section-compact section-bg-cool" aria-label="Core Services">
       <div className="container">
         {/* Section Header */}
-        <div className="section-header text-center">
+        <div className="section-header section-header-compact text-center">
           <RevealOnScroll>
             <span className="section-eyebrow">Enterprise Solutions</span>
             <h2 className="section-title">Core Services</h2>
@@ -41,19 +40,19 @@ export default function CoreServices() {
           </RevealOnScroll>
         </div>
 
-        {/* 8-Service Grid */}
+        {/* 8-Service Compact Grid */}
         <div className="services-grid">
           {coreServices.map((service, index) => {
             const IconComponent = iconMap[service.iconName] || Users;
             return (
-              <RevealOnScroll key={service.id} delay={index * 60}>
+              <RevealOnScroll key={service.id} delay={index * 50}>
                 <div className="service-card">
                   <div className="service-card-icon-wrap">
-                    <IconComponent size={24} aria-hidden="true" />
+                    <IconComponent size={22} aria-hidden="true" />
                   </div>
                   <h3 className="service-card-title">{service.title}</h3>
                   <p className="service-card-desc">{service.description}</p>
-                  
+
                   <ul className="service-scope-list">
                     {service.scopePoints.map((point, idx) => (
                       <li key={idx} className="service-scope-item">
@@ -67,18 +66,7 @@ export default function CoreServices() {
             );
           })}
         </div>
-
-        {/* Action Callout */}
-        <RevealOnScroll delay={200}>
-          <div className="services-footer-cta">
-            <a href="#contact" className="btn btn-primary btn-lg">
-              Find the Right Solution for Your Team
-              <ArrowRight size={18} aria-hidden="true" />
-            </a>
-          </div>
-        </RevealOnScroll>
       </div>
     </section>
   );
 }
-

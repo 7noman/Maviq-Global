@@ -1,7 +1,7 @@
 import React from 'react';
-import { Phone, Building, ExternalLink } from 'lucide-react';
 import { companyDetails } from '../data/companyData';
 import RevealOnScroll from '../components/RevealOnScroll';
+import CountryFlag from '../components/CountryFlag';
 
 export default function RegionalPresence() {
   return (
@@ -13,26 +13,21 @@ export default function RegionalPresence() {
             <span className="section-eyebrow">Middle East Operations</span>
             <h2 className="section-title">Regional Footprint</h2>
             <p className="section-subtitle">
-              Serving enterprise clients and technology leaders across three major commercial economies with dedicated regional communication lines.
+              Serving enterprise clients and technology leaders across three major commercial economies across the Gulf region.
             </p>
           </RevealOnScroll>
         </div>
 
-        {/* 3 Regional Cards */}
+        {/* 3 Regional Cards (Flags & Country Info without phone numbers) */}
         <div className="regions-grid">
           {companyDetails.regions.map((reg, index) => (
             <RevealOnScroll key={reg.code} delay={index * 80}>
               <div className="region-card">
-                <div className="region-flag-box" aria-hidden="true">
-                  {reg.flag}
+                <div className="region-flag-box">
+                  <CountryFlag code={reg.code} size="lg" />
                 </div>
                 <h3 className="region-country-name">{reg.country}</h3>
                 <p className="region-desc">{reg.description}</p>
-
-                <a href={`tel:${reg.phoneRaw}`} className="region-phone-link">
-                  <Phone size={18} aria-hidden="true" />
-                  <span>{reg.phone}</span>
-                </a>
               </div>
             </RevealOnScroll>
           ))}
@@ -41,4 +36,3 @@ export default function RegionalPresence() {
     </section>
   );
 }
-

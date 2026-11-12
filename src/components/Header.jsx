@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { companyDetails } from '../data/companyData';
 
-export default function Header() {
+export default function Header({ currentPage, navigateTo }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -47,10 +47,23 @@ export default function Header() {
     { label: 'Industries', href: '#industries' },
     { label: 'Our Approach', href: '#why-maviq' },
     { label: 'Contact', href: '#contact' },
+    { label: 'Careers', href: '#careers', isPage: true },
   ];
 
-  const handleLinkClick = () => {
+  const handleLinkClick = (e, link) => {
+    e.preventDefault();
     setIsMobileMenuOpen(false);
+    if (link.isPage) {
+      navigateTo('careers');
+    } else {
+      navigateTo('home', link.href);
+    }
+  };
+
+  const handleBrandClick = (e) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    navigateTo('home', '#home');
   };
 
   return (
@@ -58,13 +71,18 @@ export default function Header() {
       <header className={`site-header ${isScrolled ? 'scrolled' : ''}`}>
         <div className="container header-container">
           {/* Brand Logo & Title */}
-          <a href="#home" className="header-brand" aria-label="Maviq Global Consulting FZC Home">
+          <a
+            href="#home"
+            className="header-brand"
+            aria-label="Maviq Global Consulting FZC Home"
+            onClick={handleBrandClick}
+          >
             <img
               src="./assets/logo.png"
               alt="Maviq Global Consulting FZC Logo"
               className="header-logo"
-              width="64"
-              height="42"
+              width="753"
+              height="487"
             />
             <div className="brand-text-block">
               <span className="brand-company-name">Maviq Global</span>
@@ -74,16 +92,32 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <nav className="desktop-nav" aria-label="Main Navigation">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="nav-link">
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = link.isPage && currentPage === 'careers';
+              return (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className={`nav-link ${isActive ? 'active' : ''}`}
+                  aria-current={isActive ? 'page' : undefined}
+                  onClick={(e) => handleLinkClick(e, link)}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
           </nav>
 
           {/* Actions & Mobile Toggle */}
           <div className="header-actions">
-            <a href="#contact" className="btn btn-primary header-cta-btn">
+            <a
+              href="#contact"
+              className="btn btn-primary header-cta-btn"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateTo('home', '#contact');
+              }}
+            >
               Discuss Your Requirements
             </a>
 
@@ -119,9 +153,9 @@ export default function Header() {
             <img
               src="./assets/logo.png"
               alt="Maviq Global Consulting FZC Logo"
-              className="header-logo"
-              width="50"
-              height="33"
+              className="header-logo mobile-drawer-logo"
+              width="753"
+              height="487"
             />
             <div className="brand-text-block">
               <span className="brand-company-name">Maviq Global</span>
@@ -138,13 +172,13 @@ export default function Header() {
           </button>
         </div>
 
-        <nav className="mobile-nav-links">
+        <nav className="mobile-nav-links" aria-label="Mobile Navigation Links">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="mobile-nav-link"
-              onClick={handleLinkClick}
+              className={`mobile-nav-link ${link.isPage && currentPage === 'careers' ? 'active' : ''}`}
+              onClick={(e) => handleLinkClick(e, link)}
             >
               <span>{link.label}</span>
               <ArrowRight size={16} aria-hidden="true" />
@@ -156,7 +190,11 @@ export default function Header() {
           <a
             href="#contact"
             className="btn btn-primary btn-block"
-            onClick={handleLinkClick}
+            onClick={(e) => {
+              e.preventDefault();
+              setIsMobileMenuOpen(false);
+              navigateTo('home', '#contact');
+            }}
           >
             Discuss Your Requirements
           </a>
@@ -168,4 +206,3 @@ export default function Header() {
     </>
   );
 }
-

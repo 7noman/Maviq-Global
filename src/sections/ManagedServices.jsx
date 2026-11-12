@@ -21,6 +21,10 @@ const iconMap = {
 };
 
 export default function ManagedServices() {
+  // Split services evenly into two groups aligned with two distinct images
+  const firstHalf = managedServiceAreas.slice(0, 3);
+  const secondHalf = managedServiceAreas.slice(3);
+
   return (
     <section id="managed-services" className="section section-bg-cool" aria-label="Managed IT Services">
       <div className="container">
@@ -37,8 +41,8 @@ export default function ManagedServices() {
           </RevealOnScroll>
         </div>
 
+        {/* First Row: Operations Collaboration Image + Services 1-3 */}
         <div className="managed-grid">
-          {/* Left Column: Workplace Corporate Corridor Photography */}
           <div className="managed-image-col">
             <RevealOnScroll>
               <img
@@ -52,9 +56,8 @@ export default function ManagedServices() {
             </RevealOnScroll>
           </div>
 
-          {/* Right Column: Structured Managed Services Ledger */}
           <div className="managed-services-list">
-            {managedServiceAreas.map((area, index) => {
+            {firstHalf.map((area, index) => {
               const IconComp = iconMap[area.iconName] || CheckCircle2;
               return (
                 <RevealOnScroll key={area.id} delay={index * 60}>
@@ -72,8 +75,42 @@ export default function ManagedServices() {
             })}
           </div>
         </div>
+
+        {/* Second Row: Services 4-6 + Engineering Systems Image */}
+        <div className="managed-grid managed-grid-second">
+          <div className="managed-services-list">
+            {secondHalf.map((area, index) => {
+              const IconComp = iconMap[area.iconName] || CheckCircle2;
+              return (
+                <RevealOnScroll key={area.id} delay={index * 60}>
+                  <div className="managed-service-item">
+                    <div className="managed-item-icon-box">
+                      <IconComp size={22} aria-hidden="true" />
+                    </div>
+                    <div>
+                      <h3 className="managed-item-title">{area.title}</h3>
+                      <p className="managed-item-desc">{area.description}</p>
+                    </div>
+                  </div>
+                </RevealOnScroll>
+              );
+            })}
+          </div>
+
+          <div className="managed-image-col">
+            <RevealOnScroll>
+              <img
+                src="./assets/software-engineering.jpg"
+                alt="Enterprise software engineering, DevOps automation, and systems administration environment"
+                className="managed-image"
+                width="1200"
+                height="675"
+                loading="lazy"
+              />
+            </RevealOnScroll>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
-

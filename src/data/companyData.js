@@ -19,6 +19,7 @@ export const companyDetails = {
       code: "UAE",
       phone: "+971 52372 5262",
       phoneRaw: "+971523725262",
+      address: "United Arab Emirates, PO BOX: 73111",
       flag: "🇦🇪",
       description: "Regional headquarters and strategic workforce solutions for Dubai, Abu Dhabi, and Northern Emirates enterprises.",
     },
@@ -27,6 +28,7 @@ export const companyDetails = {
       code: "QATAR",
       phone: "+974 5044 8731",
       phoneRaw: "+97450448731",
+      address: "Qatar Regional Operations",
       flag: "🇶🇦",
       description: "Specialized technology staffing and consulting solutions supporting Qatar's growing enterprise sector.",
     },
@@ -35,6 +37,7 @@ export const companyDetails = {
       code: "SAUDI ARABIA",
       phone: "+966 55165 4252",
       phoneRaw: "+966551654252",
+      address: "Saudi Arabia Regional Operations",
       flag: "🇸🇦",
       description: "Strategic talent augmentation and digital consulting driving mission-critical projects across the Kingdom.",
     },
@@ -209,7 +212,7 @@ export const talentCategories = [
 export const managedServiceAreas = [
   {
     id: "infra-ops",
-    title: "IT Infrastructure & Operation Management",
+    title: "IT Infrastructure & Operations Management",
     description: "Comprehensive administration, monitoring, and ongoing maintenance of servers, storage, and operational IT environments.",
     iconName: "HardDrive",
   },
@@ -293,81 +296,6 @@ export const industriesList = [
     title: "Information Technology",
     description: "Direct talent augmentation for technology providers, systems integrators, and software product engineering studios.",
     iconName: "Cpu",
-  },
-];
-
-export const engagementModels = [
-  {
-    id: "model-staff-aug",
-    title: "Staff Augmentation",
-    badge: "Flexible Staffing",
-    description: "Provide skilled professionals for your team on long term, short term, contractual and temporary hiring models.",
-    details: "Seamlessly integrate specialized individual contributors or entire pods into your existing technical workflows.",
-    keyCharacteristics: [
-      "Direct technical management by client",
-      "Rapid talent ramp-up and ramp-down",
-      "Immediate capability injection without overhead",
-    ],
-  },
-  {
-    id: "model-project",
-    title: "Project Outsourcing",
-    badge: "Milestone-Based",
-    description: "End-to-end project technology delivery managed by Maviq Global Consulting.",
-    details: "Deliver well-scoped digital initiatives with clear deliverables, defined milestones, and accountable governance.",
-    keyCharacteristics: [
-      "Defined milestone deliverables and milestones",
-      "Autonomous project delivery teams",
-      "Structured reporting and governance reviews",
-    ],
-  },
-  {
-    id: "model-managed",
-    title: "Managed Services",
-    badge: "Long-Term Operations",
-    description: "Long-term technology operations management by Maviq Global Consulting specialists.",
-    details: "Ensure operational stability and continuous technical improvement with dedicated support infrastructure.",
-    keyCharacteristics: [
-      "Consistent operational oversight",
-      "Standardized maintenance procedures",
-      "Continuous optimization of IT assets",
-    ],
-  },
-  {
-    id: "model-exec-search",
-    title: "Executive Search",
-    badge: "Leadership Search",
-    description: "Targeted talent acquisition for senior technology leadership, directors, and critical architects.",
-    details: "Precision recruitment methodology identifying leaders who combine technical mastery with strategic executive presence.",
-    keyCharacteristics: [
-      "In-depth market mapping and headhunting",
-      "Rigorous technical and cultural appraisal",
-      "Discreet and confidential outreach",
-    ],
-  },
-  {
-    id: "model-hr-payroll",
-    title: "HR Provisioning & Payroll Management",
-    badge: "Workforce Administration",
-    description: "Workforce administration and payroll management across local and regional jurisdictions.",
-    details: "Compliant personnel onboarding, regional payroll administration, and employment records governance.",
-    keyCharacteristics: [
-      "Statutory compliance across UAE, Qatar, and KSA",
-      "Timely and accurate salary disbursement",
-      "Complete contractor lifecycle documentation",
-    ],
-  },
-  {
-    id: "model-bulk-hiring",
-    title: "Mass Recruitment & Bulk Hiring",
-    badge: "Large-Scale Scaling",
-    description: "Support larger-scale recruitment requirements for rapid organizational expansion or major projects.",
-    details: "Coordinated hiring campaigns to assemble substantial technology teams under aggressive project timelines.",
-    keyCharacteristics: [
-      "High-throughput candidate screening",
-      "Standardized assessment frameworks",
-      "Simultaneous onboarding workflows",
-    ],
   },
 ];
 

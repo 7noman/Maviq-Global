@@ -1,7 +1,7 @@
 import React from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import { companyDetails } from '../data/companyData';
 import RevealOnScroll from '../components/RevealOnScroll';
+import CountryFlag from '../components/CountryFlag';
 
 export default function Hero() {
   return (
@@ -25,7 +25,7 @@ export default function Hero() {
 
             <RevealOnScroll delay={150}>
               <p className="hero-lead-highlight">
-                Technology talent. Strategic expertise. Workforce solutions built around your business.
+                Technology talent + Strategic expertise + Workforce solutions built around your business
               </p>
             </RevealOnScroll>
 
@@ -47,17 +47,24 @@ export default function Hero() {
               </div>
             </RevealOnScroll>
 
-            {/* Regional Presence Bar */}
+            {/* Country Display: UAE | QATAR | SAUDI ARABIA */}
             <RevealOnScroll delay={300}>
               <div className="hero-regions-strip">
-                <span className="region-label">Operating Across:</span>
-                <div className="region-badges">
-                  {companyDetails.regions.map((region) => (
-                    <span key={region.code} className="region-chip">
-                      <span>{region.flag}</span>
-                      <span>{region.country}</span>
-                    </span>
-                  ))}
+                <div className="hero-country-display" aria-label="Operating Regions: UAE, Qatar, Saudi Arabia">
+                  <span className="hero-country-item">
+                    <CountryFlag code="UAE" size="sm" />
+                    <span className="hero-country-name">UAE</span>
+                  </span>
+                  <span className="hero-country-divider" aria-hidden="true">|</span>
+                  <span className="hero-country-item">
+                    <CountryFlag code="QATAR" size="sm" />
+                    <span className="hero-country-name">QATAR</span>
+                  </span>
+                  <span className="hero-country-divider" aria-hidden="true">|</span>
+                  <span className="hero-country-item">
+                    <CountryFlag code="SAUDI ARABIA" size="sm" />
+                    <span className="hero-country-name">SAUDI ARABIA</span>
+                  </span>
                 </div>
               </div>
             </RevealOnScroll>
@@ -66,28 +73,28 @@ export default function Hero() {
           {/* Right Column: Visual Composition */}
           <div className="hero-visual-frame">
             <RevealOnScroll delay={200}>
-              <div className="hero-main-card">
-                <img
-                  src="./assets/consulting-meeting.jpg"
-                  alt="Maviq Global consulting team in a collaborative strategy session"
-                  className="hero-image"
-                  width="1008"
-                  height="1337"
-                  fetchPriority="high"
-                />
-              </div>
+              <div className="hero-visual-stack">
+                <div className="hero-main-card">
+                  <img
+                    src="./assets/hero-recruitment.jpg"
+                    alt="Technology recruitment and talent acquisition consultation meeting"
+                    className="hero-image"
+                    width="1200"
+                    height="800"
+                    fetchPriority="high"
+                  />
+                </div>
 
-              {/* Floating Strategic Value Card */}
-              <div className="hero-floating-card">
-                <h4 className="floating-card-title">Strategic Value</h4>
-                <p className="floating-card-text">
-                  "The Right Talent. The Right Time. The Right Impact."
-                </p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '0.625rem' }}>
-                  <CheckCircle2 size={15} color="#D5A84B" aria-hidden="true" />
-                  <span style={{ fontSize: '0.75rem', color: '#D3DFEB', fontWeight: '500' }}>
-                    UAE · Qatar · Saudi Arabia
-                  </span>
+                {/* Strategic Value Card positioned cleanly below the hero image */}
+                <div className="hero-floating-card">
+                  <h4 className="floating-card-title">Strategic Value</h4>
+                  <p className="floating-card-text">
+                    Technology Talent + Strategic Expertise + Workforce Solutions built around your business
+                  </p>
+                  <div className="floating-card-meta">
+                    <CheckCircle2 size={15} color="#D5A84B" aria-hidden="true" />
+                    <span>UAE · Qatar · Saudi Arabia</span>
+                  </div>
                 </div>
               </div>
             </RevealOnScroll>
@@ -97,4 +104,3 @@ export default function Hero() {
     </section>
   );
 }
-

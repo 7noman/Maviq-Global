@@ -20,17 +20,17 @@ export default function About() {
           {/* Left Column: Editorial Content */}
           <div className="about-content-col">
             <RevealOnScroll>
-              <span className="section-eyebrow">About Our Firm</span>
+              <span className="section-eyebrow">About Maviq Global</span>
               <h2 className="section-title">
                 Talent and Technology, Aligned with Business Goals.
               </h2>
             </RevealOnScroll>
 
             <RevealOnScroll delay={100}>
-              <p className="lead">
+              <p className="about-lead-copy">
                 Maviq Global Consulting is a technology staffing and recruitment consulting firm supporting businesses across the Middle East with skilled IT professionals and tailored workforce solutions.
               </p>
-              <p>
+              <p className="about-body-copy">
                 We specialize in technology staff augmentation, permanent recruitment, project-based hiring, and IT outsourcing to support organizations in finding the right talent to meet their business and technology objectives. Our focus is on delivering quality talent, flexible staffing solutions, and reliable recruitment support across diverse industries.
               </p>
             </RevealOnScroll>
@@ -50,7 +50,7 @@ export default function About() {
 
             {/* Core Specialization List */}
             <RevealOnScroll delay={200}>
-              <h3 style={{ fontSize: '1.05rem', marginTop: '0.5rem', marginBottom: '0.75rem' }}>
+              <h3 className="about-capabilities-heading">
                 Core Capabilities & Delivery Focus:
               </h3>
               <div className="about-pillars-list">
@@ -64,28 +64,30 @@ export default function About() {
             </RevealOnScroll>
           </div>
 
-          {/* Right Column: Visual Composition with Official Brand Badge */}
+          {/* Right Column: Cleanly Aligned Visual Composition without Overlap */}
           <div className="about-visual-col">
             <RevealOnScroll delay={200}>
-              <div className="about-image-wrapper">
-                <img
-                  src="./assets/talent-meeting.jpg"
-                  alt="Maviq Global enterprise consulting and talent alignment meeting"
-                  className="about-image"
-                  width="583"
-                  height="872"
-                  loading="lazy"
-                />
-              </div>
-
-              {/* Official Brand Message Badge */}
-              <div className="about-brand-badge">
-                <div className="about-badge-quote">
-                  "The Right Talent. The Right Time. The Right Impact."
+              <div className="about-image-card">
+                <div className="about-image-wrapper">
+                  <img
+                    src="./assets/consulting-meeting.jpg"
+                    alt="Maviq Global enterprise consulting and talent alignment meeting"
+                    className="about-image"
+                    width="1008"
+                    height="1337"
+                    loading="lazy"
+                  />
                 </div>
-                <p className="about-badge-sub">
-                  Technology Consulting · Talent Outsourcing · Managed Services
-                </p>
+
+                {/* Official Brand Message Strip cleanly aligned beneath image */}
+                <div className="about-brand-badge">
+                  <div className="about-badge-quote">
+                    "The Right Talent. The Right Time. The Right Impact."
+                  </div>
+                  <p className="about-badge-sub">
+                    Technology Consulting · Talent Outsourcing · Managed Services
+                  </p>
+                </div>
               </div>
             </RevealOnScroll>
           </div>
@@ -94,4 +96,3 @@ export default function About() {
     </section>
   );
 }
-

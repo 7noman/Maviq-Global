@@ -3,7 +3,7 @@ import { Phone, Mail, Globe, MapPin } from 'lucide-react';
 import { companyDetails, coreServices } from '../data/companyData';
 import LegalModal from './LegalModal';
 
-export default function Footer() {
+export default function Footer({ currentPage, navigateTo }) {
   const currentYear = new Date().getFullYear();
   const [modalType, setModalType] = useState(null);
 
@@ -14,10 +14,20 @@ export default function Footer() {
     { label: 'Talent Directory', href: '#talent' },
     { label: 'Managed IT Operations', href: '#managed-services' },
     { label: 'Industries We Serve', href: '#industries' },
-    { label: 'Engagement Models', href: '#engagement-models' },
-    { label: 'Why Maviq Global', href: '#why-maviq' },
+    { label: 'Our Approach', href: '#why-maviq' },
     { label: 'Contact', href: '#contact' },
+    { label: 'Careers', href: '#careers', isPage: true },
   ];
+
+  const handleNavClick = (e, item) => {
+    if (!navigateTo) return;
+    e.preventDefault();
+    if (item.isPage) {
+      navigateTo('careers');
+    } else {
+      navigateTo('home', item.href);
+    }
+  };
 
   return (
     <>
@@ -31,8 +41,8 @@ export default function Footer() {
                   src="./assets/logo.png"
                   alt="Maviq Global Consulting FZC Logo"
                   className="footer-logo-img"
-                  width="72"
-                  height="48"
+                  width="317"
+                  height="209"
                 />
                 <div>
                   <h3 className="footer-brand-name">Maviq Global</h3>
@@ -58,7 +68,11 @@ export default function Footer() {
               <ul className="footer-links-list">
                 {navLinks.map((item) => (
                   <li key={item.href}>
-                    <a href={item.href} className="footer-link">
+                    <a
+                      href={item.href}
+                      className="footer-link"
+                      onClick={(e) => handleNavClick(e, item)}
+                    >
                       {item.label}
                     </a>
                   </li>
@@ -70,25 +84,24 @@ export default function Footer() {
             <div>
               <h4 className="footer-col-title">Core Services</h4>
               <ul className="footer-links-list">
-                {coreServices.slice(0, 6).map((service) => (
+                {coreServices.slice(0, 7).map((service) => (
                   <li key={service.id}>
-                    <a href="#services" className="footer-link">
+                    <a
+                      href="#services"
+                      className="footer-link"
+                      onClick={(e) => handleNavClick(e, { href: '#services' })}
+                    >
                       {service.title}
                     </a>
                   </li>
                 ))}
-                <li>
-                  <a href="#engagement-models" className="footer-link">
-                    Workforce & Engagement Solutions
-                  </a>
-                </li>
               </ul>
             </div>
 
             {/* Regional Contact Column */}
             <div>
               <h4 className="footer-col-title">Regional Offices</h4>
-              
+
               {companyDetails.regions.map((reg) => (
                 <div key={reg.code} className="footer-contact-item">
                   <Phone size={16} color="#D5A84B" style={{ flexShrink: 0, marginTop: '3px' }} aria-hidden="true" />
@@ -155,4 +168,3 @@ export default function Footer() {
     </>
   );
 }
-
