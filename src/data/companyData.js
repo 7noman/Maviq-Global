@@ -11,6 +11,7 @@ export const companyDetails = {
   website: "https://www.maviqglobal.com",
   displayWebsite: "www.maviqglobal.com",
   email: "info@maviqglobal.com",
+  submissionsEmail: "hussain@maviqglobal.com",
   postalAddress: "United Arab Emirates, PO BOX: 73111",
   regionsSummary: "UAE · Qatar · Saudi Arabia",
   regions: [

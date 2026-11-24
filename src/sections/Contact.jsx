@@ -60,7 +60,8 @@ export default function Contact() {
       `Notes:\n${formData.notes.trim() || 'No additional notes provided.'}\n`
     );
 
-    const mailtoUrl = `mailto:${companyDetails.email}?subject=${subject}&body=${body}`;
+    const targetEmail = companyDetails.submissionsEmail || 'hussain@maviqglobal.com';
+    const mailtoUrl = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
     window.location.href = mailtoUrl;
     setSubmitted(true);
   };
@@ -171,7 +172,8 @@ export default function Contact() {
                       <span>Ready in your email application</span>
                     </div>
                     <p style={{ margin: 0, fontSize: '0.8125rem' }}>
-                      Your email client has been opened with your prefilled inquiry. You can also write directly to{' '}
+                      Your email client has been opened with your prefilled inquiry addressed to{' '}
+                      <strong>{companyDetails.submissionsEmail}</strong>. Please review and click Send in your email application to dispatch. You can also write directly to{' '}
                       <a href={`mailto:${companyDetails.email}`} style={{ fontWeight: '600' }}>
                         {companyDetails.email}
                       </a>.
@@ -297,7 +299,7 @@ export default function Contact() {
                   </button>
 
                   <p className="form-disclaimer">
-                    Submitting opens your default email client addressed to {companyDetails.email} with your inquiry details prefilled.
+                    Submitting opens your default email client addressed to {companyDetails.submissionsEmail} with your inquiry details prefilled. For general inquiries, you can also contact {companyDetails.email}.
                   </p>
                 </form>
               </div>

@@ -136,7 +136,8 @@ export default function Careers({ navigateTo }) {
       `Additional Message:\n${formData.additionalMessage.trim() || 'No additional message provided.'}\n`
     );
 
-    window.location.href = `mailto:${companyDetails.email}?subject=${subject}&body=${body}`;
+    const targetEmail = companyDetails.submissionsEmail || 'hussain@maviqglobal.com';
+    window.location.href = `mailto:${targetEmail}?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 
@@ -280,8 +281,8 @@ export default function Careers({ navigateTo }) {
                       </div>
                       <p style={{ margin: 0, fontSize: '0.8125rem', lineHeight: 1.5 }}>
                         Your email client has been opened with your application details addressed to{' '}
-                        <a href={`mailto:${companyDetails.email}`} style={{ fontWeight: '600' }}>
-                          {companyDetails.email}
+                        <a href={`mailto:${companyDetails.submissionsEmail}`} style={{ fontWeight: '600' }}>
+                          {companyDetails.submissionsEmail}
                         </a>. Because this website uses direct email dispatch without server file storage, please attach your selected resume file (
                         <strong>{resumeFile?.name}</strong>) directly in your email window before clicking Send.
                       </p>
@@ -440,7 +441,7 @@ export default function Careers({ navigateTo }) {
                     <div className="careers-mailto-note">
                       <Info size={15} style={{ flexShrink: 0, marginTop: '2px' }} aria-hidden="true" />
                       <span>
-                        Note: This static website dispatches applications via your email client to {companyDetails.email}. You will need to attach your CV file inside your email client before sending.
+                        Note: This static website dispatches applications via your email client to {companyDetails.submissionsEmail}. You will need to attach your CV file inside your email client before sending. For general corporate inquiries, contact {companyDetails.email}.
                       </span>
                     </div>
                   </form>
